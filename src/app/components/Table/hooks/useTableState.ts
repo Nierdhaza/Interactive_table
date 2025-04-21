@@ -36,6 +36,7 @@ export const useTableState = <T>(
 
         const isFresh = timestamp && Date.now() - timestamp < 5 * 60 * 1000;
 
+        // TODO: local storage logic should be separate
         if (isFresh && LSrows?.length) {
             setRows(LSrows);
             setFilters(LSfilters);
@@ -44,6 +45,7 @@ export const useTableState = <T>(
             setPage(LSpage);
 
             if (savedRow) {
+                // TODO: add clearing of cancelAnimationFrame on cleanup function
                 requestAnimationFrame(() => {
                     const el = document.getElementById(`row-${savedRow}`);
                     if (el) {
@@ -86,6 +88,7 @@ export const useTableState = <T>(
             setLoading(true);
 
             const actualPage = reset ? 1 : currentPage;
+            // TODO: rename variables
             const res = await getRows();
 
             const array = tableFiltering(res, currentFilters);

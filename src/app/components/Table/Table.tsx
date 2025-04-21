@@ -21,6 +21,7 @@ export default function Table<T>({
     getColumnKey = (row, column) => row[column.key] as string | number,
     getRows,
 }: TableProps<T>) {
+    // TODO: table should not know about routing
     const router = useRouter();
 
     const {
@@ -160,6 +161,7 @@ export default function Table<T>({
                             <tr>
                                 <td
                                     colSpan={columns.length}
+                                    // TODO: should be moved to css
                                     style={{ textAlign: 'center', padding: '20px' }}
                                 >
                                     Loading
@@ -171,6 +173,7 @@ export default function Table<T>({
                     <tr>
                         <td
                             colSpan={columns.length}
+                            // TODO: should be moved to css
                             style={{ textAlign: 'center', padding: '20px' }}
                         >
                             {loading ? 'Loading...' : noRowsChildren}
