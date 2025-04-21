@@ -37,7 +37,7 @@ export default function Table<T>({
     } = useTableState(getRows, pageSize);
 
     const observerRef = useRef<HTMLTableRowElement>(null);
-    const [selectedRow, setSelectedRow] = useState<string | number>('');    
+    const [selectedRow, setSelectedRow] = useState<string | number>('');
 
     useInfiniteScroll({
         ref: observerRef,
@@ -79,6 +79,22 @@ export default function Table<T>({
                 <tr role="row">
                     {columns.map((column) => {
                         const isSortingActive = sortField === column.key;
+
+                        if (column.customHeader) {
+                            return (
+                                <th key={column.key as string}>
+                                    {column.customHeader({
+                                        column,
+                                        isSorted: isSortingActive,
+                                        isAscending,
+                                        sortHandler: () => handleSort(column.key),
+                                        filterValue: filters[column.key],
+                                        onFilterChange: (value) => handleFilterChange(column.key, value),
+                                    })}
+                                </th>
+                            );
+                        }
+
                         return (
                             <th
                                 key={column.key as string}

@@ -1,13 +1,23 @@
 import { JSX } from 'react';
 import { TableRow } from './tableRows'
 
+export interface CustomHeaderProps<T> {
+  column: TableColumn<T>;
+  isSorted: boolean;
+  isAscending: boolean;
+  sortHandler: () => void;
+  filterValue?: string;
+  onFilterChange: (value: string) => void;
+}
+
 export interface TableColumn<T> {
     key: keyof T;
     label: string;
     sortable?: boolean;
     filterable?: boolean;
     style?: React.CSSProperties;
-    render?: (row: T) => JSX.Element
+    render?: (row: T) => JSX.Element;
+    customHeader?: (props: CustomHeaderProps<T>) => JSX.Element;
 }
 
 export const tableColumns: TableColumn<TableRow>[] = [
@@ -17,7 +27,8 @@ export const tableColumns: TableColumn<TableRow>[] = [
       label: 'ISSUE TYPE',
       sortable: true,
       style: { backgroundColor: 'rgb(124, 61, 61)' },
-      render: (row) => <>{row.issueType}</>
+      render: (row) => <>{row.issueType}</>,
+      // customHeader: () => <>HEADER</>
     },
     { key: 'severity', label: 'SEVERITY', sortable: true },
     { key: 'component', label: 'COMPONENT', sortable: true },
