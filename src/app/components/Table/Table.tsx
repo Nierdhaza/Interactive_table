@@ -84,6 +84,7 @@ export default function Table<T>({
                                 key={column.key as string}
                                 role="columnheader"
                                 className={isSortingActive ? classes.sorted : ''}
+                                style={column.style}
                             >
                                 <span>{column.label}</span>
                                 {column.sortable && (

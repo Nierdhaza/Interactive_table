@@ -6,6 +6,7 @@ export interface TableColumn<T> {
     label: string;
     sortable?: boolean;
     filterable?: boolean;
+    style?: React.CSSProperties;
     render?: (row: T) => JSX.Element
 }
 
@@ -15,6 +16,7 @@ export const tableColumns: TableColumn<TableRow>[] = [
       key: 'issueType',
       label: 'ISSUE TYPE',
       sortable: true,
+      style: { backgroundColor: 'rgb(124, 61, 61)' },
       render: (row) => <>{row.issueType}</>
     },
     { key: 'severity', label: 'SEVERITY', sortable: true },
