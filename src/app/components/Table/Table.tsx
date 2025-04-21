@@ -87,7 +87,7 @@ export default function Table<T>({
                             >
                                 <span>{column.label}</span>
                                 {column.sortable && (
-                                    <button onClick={() => handleSort(column.key)}>
+                                    <button onClick={() => handleSort(column.key)} aria-label={column.label}>
                                         <SortIcon
                                             active={isSortingActive}
                                             ascending={isAscending}
@@ -102,6 +102,7 @@ export default function Table<T>({
                                         onChange={(e) =>
                                             handleFilterChange(column.key, e.target.value)
                                         }
+                                        aria-label={`${column.label}-filter`}
                                     />
                                 )}
                             </th>
