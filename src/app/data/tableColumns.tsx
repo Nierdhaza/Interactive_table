@@ -1,12 +1,24 @@
 import { JSX } from 'react';
-import { TableRow } from './tableRows'
+import { type TableRow } from './tableRows'
+
+// TODO: move interfaces regarding table data types to separate file types to reduce circular dependency problem in future
+export interface CustomHeaderProps<T> {
+  column: TableColumn<T>;
+  isSorted: boolean;
+  isAscending: boolean;
+  sortHandler: () => void;
+  filterValue?: string;
+  onFilterChange: (value: string) => void;
+}
 
 export interface TableColumn<T> {
     key: keyof T;
     label: string;
     sortable?: boolean;
     filterable?: boolean;
-    render?: (row: T) => JSX.Element
+    style?: React.CSSProperties;
+    render?: (row: T) => JSX.Element;
+    customHeader?: (props: CustomHeaderProps<T>) => JSX.Element;
 }
 
 export const tableColumns: TableColumn<TableRow>[] = [
@@ -15,7 +27,9 @@ export const tableColumns: TableColumn<TableRow>[] = [
       key: 'issueType',
       label: 'ISSUE TYPE',
       sortable: true,
-      render: (row) => <>{row.issueType}</>
+      // style: { backgroundColor: 'rgb(124, 61, 61)' },
+      render: (row) => <>{row.issueType}</>,
+      // customHeader: () => <>HEADER</>
     },
     { key: 'severity', label: 'SEVERITY', sortable: true },
     { key: 'component', label: 'COMPONENT', sortable: true },

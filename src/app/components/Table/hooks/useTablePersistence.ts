@@ -6,7 +6,7 @@ export const useTablePersistence = <T>({
     setSortField,
     setIsAscending,
     setPage,
-    fetchData,
+    fetchData
 }: {
     setRows: (rows: T[]) => void;
     setFilters: React.Dispatch<React.SetStateAction<{ [key in keyof T]?: string }>>;

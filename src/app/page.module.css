@@ -3,9 +3,3 @@
   overflow: auto;
   margin: 10px;
 }
-
-.tableWrapper {
-  width: 100%;
-  overflow: auto;
-  max-height: 200px;
-}
