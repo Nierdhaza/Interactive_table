@@ -21,7 +21,11 @@ export default function Table<T>({
     getColumnKey = (row, column) => row[column.key] as string | number,
     getRows,
 }: TableProps<T>) {
-    // TODO: table should not know about routing
+    /* TODO: table should not know about routing
+    * In this case we use routing logic and localStorage logic in handleRow select
+    * to TableProps add onRowClick function and move this router 
+    * and local storage logic out of this component
+    */
     const router = useRouter();
 
     const {
@@ -37,9 +41,12 @@ export default function Table<T>({
         loading,
     } = useTableState(getRows, pageSize);
 
-    const observerRef = useRef<HTMLTableRowElement>(null);
     const [selectedRow, setSelectedRow] = useState<string | number>('');
-
+    
+    // In case we use infiniteScroll table (other options are: 'clientSide' | 'serverSide')
+    // TODO: provide a function which according to options 'clientSide' | 'serverSide' | 'infiniteScroll'
+    // returns hooks with provided logic
+    const observerRef = useRef<HTMLTableRowElement>(null);
     useInfiniteScroll({
         ref: observerRef,
         hasMore,
@@ -71,6 +78,7 @@ export default function Table<T>({
                 timestamp: Date.now(),
             })
         )
+        // TODO: add caching of pages fetching logic
         router.push(`/table-item-details/${rowKey}`);
     };
 
@@ -162,8 +170,10 @@ export default function Table<T>({
                                 <td
                                     colSpan={columns.length}
                                     // TODO: should be moved to css
+                                    // TODO: use one component for loader
                                     style={{ textAlign: 'center', padding: '20px' }}
                                 >
+                                    {/*TODO: Add loader JSX to TableProps */}
                                     Loading
                                 </td>
                             </tr>
@@ -176,6 +186,7 @@ export default function Table<T>({
                             // TODO: should be moved to css
                             style={{ textAlign: 'center', padding: '20px' }}
                         >
+                             {/*TODO: Add loader JSX to TableProps */}
                             {loading ? 'Loading...' : noRowsChildren}
                         </td>
                     </tr>
